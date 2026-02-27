@@ -25,6 +25,8 @@ from typing import Any, Dict, List, Optional, Sequence, Tuple
 import warnings
 
 from fastapi import FastAPI, File, Form, HTTPException, UploadFile
+from fastapi.middleware.cors import CORSMiddleware
+
 from fastapi.responses import PlainTextResponse
 from geojson import Feature
 import numpy as np
@@ -142,6 +144,15 @@ uvicorn_logger.addFilter(EndpointFilter(path="/sam/progress/"))
 uvicorn_logger.addFilter(EndpointFilter(path="/sam/weights/cancel/"))
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 
 class ModelType(str, Enum):
