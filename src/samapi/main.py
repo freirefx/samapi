@@ -673,7 +673,8 @@ async def predict_sam3(body: SAM3Body):
         last_image = None
     if last_image != body.b64img:
         image_data = base64.b64decode(body.b64img)
-        image = Image.open(io.BytesIO(image_data))
+        # Always convert to RGB for consistency
+        image = Image.open(io.BytesIO(image_data)).convert("RGB")
         # log image size and type
         logger.info(f"Image size: {image.size}, mode: {image.mode}")
         inference_state = predictor.set_image(image, state=inference_state)

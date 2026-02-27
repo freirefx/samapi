@@ -27,7 +27,7 @@ except (TypeError, ValueError):
 
 
 def decode_image(b64data: str):
-    return np.array(Image.open(io.BytesIO(base64.b64decode(b64data))))
+    return np.array(Image.open(io.BytesIO(base64.b64decode(b64data))).convert("RGB"))
 
 
 def mask_to_geometry(
